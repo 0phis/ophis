@@ -15,33 +15,33 @@
 <script>
 
   // Replace with your client ID from the developer console.
-//   var CLIENT_ID = '358569257582-8s3ev0umpdh5ivuel0a5qt1bltjq1r0n.apps.googleusercontent.com';
+ var CLIENT_ID = '358569257582-8s3ev0umpdh5ivuel0a5qt1bltjq1r0n.apps.googleusercontent.com';
 
 //   // Set authorized scope.
-//   var SCOPES = ['https://www.googleapis.com/auth/analytics.readonly'];
+  var SCOPES = ['https://www.googleapis.com/auth/analytics.readonly'];
 
 
-//   function authorize(event) {
-//     // Handles the authorization flow.
-//     // `immediate` should be false when invoked from the button click.
-//     var useImmdiate = event ? false : true;
-//     var authData = {
-//       client_id: CLIENT_ID,
-//       scope: SCOPES,
-//       immediate: useImmdiate // true
-//     };
+  function authorize(event) {
+    // Handles the authorization flow.
+    // `immediate` should be false when invoked from the button click.
+    var useImmdiate = event ? false : true;
+    var authData = {
+      client_id: CLIENT_ID,
+      scope: SCOPES,
+      immediate: useImmdiate // true
+    };
 
-//     gapi.auth.authorize(authData, function(response) {
-//         var authButton = document.getElementById('auth-button');
-//       if (response.error) {
-//         authButton.hidden = false;
-//       }
-//       else {
-//         authButton.hidden = true;   
-//         queryAccounts();
-//       }
-//     });
-//   }
+    gapi.auth.authorize(authData, function(response) {
+        var authButton = document.getElementById('auth-button');
+      if (response.error) {
+        authButton.hidden = false;
+      }
+      else {
+        authButton.hidden = true;   
+        queryProfiles();
+      }
+    });
+  }
 
 
 // function queryAccounts() {
@@ -102,43 +102,42 @@
 // }
 
 
-// function queryProfiles(accountId, propertyId) {
+function queryProfiles() {
     
-//   // Get a list of all Views (Profiles) for the first property
-//   // of the first Account.
-//   gapi.client.analytics.management.profiles.list({
-//       'accountId': accountId,
-//       'webPropertyId': propertyId
-//   })
-//   .then(handleProfiles)
-//   .then(null, function(err) {
-//       // Log any errors.
-//       console.log(err);
-//   });
-// }
+  // Get a list of all Views (Profiles) for the first property
+  // of the first Account.
+  gapi.client.analytics.management.profiles.list({
+      'accountId': '111398624',
+      'webPropertyId': 'UA-111398624-1',
+  })
+  .then(handleProfiles)
+  .then(null, function(err) {
+      // Log any errors.
+      console.log(err);
+  });
+}
 
 
-// function handleProfiles(response) {
-//     console.log('>>>>>>>>>>>>',response);
-//   // Handles the response from the profiles list method.
-//   if (response.result.items && response.result.items.length) {
-//     // Get the first View (Profile) ID.
-//     var firstProfileId = response.result.items[0].id;
-//     console.log('147',firstProfileId);
-//     // Query the Core Reporting API.
-//     queryCoreReportingApi(firstProfileId);
-//   } else {
-//     console.log('No views (profiles) found for this user.');
-//   }
-// }
+function handleProfiles(response) {
+ 
+  // Handles the response from the profiles list method.
+  if (response.result.items && response.result.items.length) {
+    // Get the first View (Profile) ID.
+    var firstProfileId = response.result.items[0].id;
+    // Query the Core Reporting API.
+    queryCoreReportingApi(firstProfileId);
+  } else {
+    console.log('No views (profiles) found for this user.');
+  }
+}
 
 
-function queryCoreReportingApi() {
+function queryCoreReportingApi(profileId) {
    
   // Query the Core Reporting API for the number sessions for
   // the past seven days.
   gapi.client.analytics.data.ga.get({
-    'ids': 'ga:' + '166533939',
+    'ids': 'ga:' + profileId,
     'start-date': '7daysAgo',
     'end-date': 'today',
     'metrics': 'ga:sessions'
@@ -154,7 +153,7 @@ function queryCoreReportingApi() {
 }
 
   // Add an event listener to the 'auth-button'.
-  //document.getElementById('auth-button').addEventListener('click', authorize);
+  document.getElementById('auth-button').addEventListener('click', authorize);
 </script>
 
 <script src="https://apis.google.com/js/client.js?onload=authorize"></script>
