@@ -84,7 +84,7 @@ function queryProperties(accountId) {
 
 
 function handleProperties(response) {
-    
+    console.log('**********',response);
   // Handles the response from the webproperties list method.
   if (response.result.items && response.result.items.length) {
 
@@ -119,7 +119,7 @@ function queryProfiles(accountId, propertyId) {
 
 
 function handleProfiles(response) {
-    
+    console.log('>>>>>>>>>>>>',response);
   // Handles the response from the profiles list method.
   if (response.result.items && response.result.items.length) {
     // Get the first View (Profile) ID.
