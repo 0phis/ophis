@@ -15,130 +15,130 @@
 <script>
 
   // Replace with your client ID from the developer console.
-  var CLIENT_ID = '358569257582-8s3ev0umpdh5ivuel0a5qt1bltjq1r0n.apps.googleusercontent.com';
+//   var CLIENT_ID = '358569257582-8s3ev0umpdh5ivuel0a5qt1bltjq1r0n.apps.googleusercontent.com';
 
-  // Set authorized scope.
-  var SCOPES = ['https://www.googleapis.com/auth/analytics.readonly'];
-
-
-  function authorize(event) {
-    // Handles the authorization flow.
-    // `immediate` should be false when invoked from the button click.
-    var useImmdiate = event ? false : true;
-    var authData = {
-      client_id: CLIENT_ID,
-      scope: SCOPES,
-      immediate: useImmdiate // true
-    };
-
-    gapi.auth.authorize(authData, function(response) {
-        var authButton = document.getElementById('auth-button');
-      if (response.error) {
-        authButton.hidden = false;
-      }
-      else {
-        authButton.hidden = true;   
-        queryAccounts();
-      }
-    });
-  }
+//   // Set authorized scope.
+//   var SCOPES = ['https://www.googleapis.com/auth/analytics.readonly'];
 
 
-function queryAccounts() {
+//   function authorize(event) {
+//     // Handles the authorization flow.
+//     // `immediate` should be false when invoked from the button click.
+//     var useImmdiate = event ? false : true;
+//     var authData = {
+//       client_id: CLIENT_ID,
+//       scope: SCOPES,
+//       immediate: useImmdiate // true
+//     };
+
+//     gapi.auth.authorize(authData, function(response) {
+//         var authButton = document.getElementById('auth-button');
+//       if (response.error) {
+//         authButton.hidden = false;
+//       }
+//       else {
+//         authButton.hidden = true;   
+//         queryAccounts();
+//       }
+//     });
+//   }
+
+
+// function queryAccounts() {
    
-  // Load the Google Analytics client library.
-  gapi.client.load('analytics', 'v3').then(function() {
+//   // Load the Google Analytics client library.
+//   gapi.client.load('analytics', 'v3').then(function() {
 
-    // Get a list of all Google Analytics accounts for this user
-    gapi.client.analytics.management.accounts.list().then(handleAccounts);
-  });
-}
-
-
-function handleAccounts(response) {
-    console.log('000000000',response);
-  // Handles the response from the accounts list method.
-  if (response.result.items && response.result.items.length) {
-    // Get the first Google Analytics account.
-    var firstAccountId = response.result.items[0].id;
-    console.log('11111',firstAccountId);
-    // Query for properties.
-    queryProperties(firstAccountId);
-  } else {
-    console.log('No accounts found for this user.');
-  }
-}
+//     // Get a list of all Google Analytics accounts for this user
+//     gapi.client.analytics.management.accounts.list().then(handleAccounts);
+//   });
+// }
 
 
-function queryProperties(accountId) {
-   console.log('123',accountId);
-  // Get a list of all the properties for the account.
-  gapi.client.analytics.management.webproperties.list(
-      {'accountId': accountId})
-    .then(handleProperties)
-    .then(null, function(err) {
-      // Log any errors.
-      console.log(err);
-  });
-}
+// function handleAccounts(response) {
+//     console.log('000000000',response);
+//   // Handles the response from the accounts list method.
+//   if (response.result.items && response.result.items.length) {
+//     // Get the first Google Analytics account.
+//     var firstAccountId = response.result.items[0].id;
+//     console.log('11111',firstAccountId);
+//     // Query for properties.
+//     queryProperties(firstAccountId);
+//   } else {
+//     console.log('No accounts found for this user.');
+//   }
+// }
 
 
-function handleProperties(response) {
-    console.log('**********',response);
-  // Handles the response from the webproperties list method.
-  if (response.result.items && response.result.items.length) {
-
-    // Get the first Google Analytics account
-    var firstAccountId = response.result.items[0].accountId;
-    console.log('456',firstAccountId);
-    // Get the first property ID
-    var firstPropertyId = response.result.items[0].id;
-    console.log('789',firstPropertyId);
-    // Query for Views (Profiles).
-    queryProfiles(firstAccountId, firstPropertyId);
-  } else {
-    console.log('No properties found for this user.');
-  }
-}
+// function queryProperties(accountId) {
+//    console.log('123',accountId);
+//   // Get a list of all the properties for the account.
+//   gapi.client.analytics.management.webproperties.list(
+//       {'accountId': accountId})
+//     .then(handleProperties)
+//     .then(null, function(err) {
+//       // Log any errors.
+//       console.log(err);
+//   });
+// }
 
 
-function queryProfiles(accountId, propertyId) {
+// function handleProperties(response) {
+//     console.log('**********',response);
+//   // Handles the response from the webproperties list method.
+//   if (response.result.items && response.result.items.length) {
+
+//     // Get the first Google Analytics account
+//     var firstAccountId = response.result.items[0].accountId;
+//     console.log('456',firstAccountId);
+//     // Get the first property ID
+//     var firstPropertyId = response.result.items[0].id;
+//     console.log('789',firstPropertyId);
+//     // Query for Views (Profiles).
+//     queryProfiles(firstAccountId, firstPropertyId);
+//   } else {
+//     console.log('No properties found for this user.');
+//   }
+// }
+
+
+// function queryProfiles(accountId, propertyId) {
     
-  // Get a list of all Views (Profiles) for the first property
-  // of the first Account.
-  gapi.client.analytics.management.profiles.list({
-      'accountId': accountId,
-      'webPropertyId': propertyId
-  })
-  .then(handleProfiles)
-  .then(null, function(err) {
-      // Log any errors.
-      console.log(err);
-  });
-}
+//   // Get a list of all Views (Profiles) for the first property
+//   // of the first Account.
+//   gapi.client.analytics.management.profiles.list({
+//       'accountId': accountId,
+//       'webPropertyId': propertyId
+//   })
+//   .then(handleProfiles)
+//   .then(null, function(err) {
+//       // Log any errors.
+//       console.log(err);
+//   });
+// }
 
 
-function handleProfiles(response) {
-    console.log('>>>>>>>>>>>>',response);
-  // Handles the response from the profiles list method.
-  if (response.result.items && response.result.items.length) {
-    // Get the first View (Profile) ID.
-    var firstProfileId = response.result.items[0].id;
-    console.log('147',firstProfileId);
-    // Query the Core Reporting API.
-    queryCoreReportingApi(firstProfileId);
-  } else {
-    console.log('No views (profiles) found for this user.');
-  }
-}
+// function handleProfiles(response) {
+//     console.log('>>>>>>>>>>>>',response);
+//   // Handles the response from the profiles list method.
+//   if (response.result.items && response.result.items.length) {
+//     // Get the first View (Profile) ID.
+//     var firstProfileId = response.result.items[0].id;
+//     console.log('147',firstProfileId);
+//     // Query the Core Reporting API.
+//     queryCoreReportingApi(firstProfileId);
+//   } else {
+//     console.log('No views (profiles) found for this user.');
+//   }
+// }
 
 
-function queryCoreReportingApi(profileId) {
+function queryCoreReportingApi() {
    
   // Query the Core Reporting API for the number sessions for
   // the past seven days.
   gapi.client.analytics.data.ga.get({
-    'ids': 'ga:' + profileId,
+    'ids': 'ga:' + '166533939',
     'start-date': '7daysAgo',
     'end-date': 'today',
     'metrics': 'ga:sessions'
@@ -154,7 +154,7 @@ function queryCoreReportingApi(profileId) {
 }
 
   // Add an event listener to the 'auth-button'.
-  document.getElementById('auth-button').addEventListener('click', authorize);
+  //document.getElementById('auth-button').addEventListener('click', authorize);
 </script>
 
 <script src="https://apis.google.com/js/client.js?onload=authorize"></script>
