@@ -21,28 +21,28 @@
   var SCOPES = ['https://www.googleapis.com/auth/analytics.readonly'];
 
 
-  function authorize(event) {
-    // Handles the authorization flow.
-    // `immediate` should be false when invoked from the button click.
-    var useImmdiate = event ? false : true;
-    var authData = {
-      client_id: CLIENT_ID,
-      scope: SCOPES,
-      immediate: useImmdiate // true
-    };
+//   function authorize(event) {
+//     // Handles the authorization flow.
+//     // `immediate` should be false when invoked from the button click.
+//     var useImmdiate = event ? false : true;
+//     var authData = {
+//       client_id: CLIENT_ID,
+//       scope: SCOPES,
+//       immediate: useImmdiate // true
+//     };
 
-    gapi.auth.authorize(authData, function(response) {
-        console.log('>>>>>>>>>>>>>',response);
-        var authButton = document.getElementById('auth-button');
-      if (response.error) {
-        authButton.hidden = false;
-      }
-      else {
-        authButton.hidden = true;   
-        queryAccounts();
-      }
-    });
-  }
+//     gapi.auth.authorize(authData, function(response) {
+//         console.log('>>>>>>>>>>>>>',response);
+//         var authButton = document.getElementById('auth-button');
+//       if (response.error) {
+//         authButton.hidden = false;
+//       }
+//       else {
+//         authButton.hidden = true;   
+//         queryAccounts();
+//       }
+//     });
+//   }
 
 
 function queryAccounts() {
@@ -56,18 +56,18 @@ function queryAccounts() {
 }
 
 
-function handleAccounts(response) {
- 
+function handleAccounts() {
+    
   // Handles the response from the accounts list method.
-  if (response.result.items && response.result.items.length) {
+//   if (response.result.items && response.result.items.length) {
     // Get the first Google Analytics account.
-    var firstAccountId = response.result.items[0].id;
+    var firstAccountId = 111398624;
   
     // Query for properties.
     queryProperties(firstAccountId);
-  } else {
-    console.log('No accounts found for this user.');
-  }
+//   } else {
+//     console.log('No accounts found for this user.');
+//   }
 }
 
 
