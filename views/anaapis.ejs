@@ -31,16 +31,16 @@
       immediate: useImmdiate // true
     };
 
-    gapi.auth.authorize(authData, function() {
+    gapi.auth.authorize(authData, function(response) {
+        
+        var authButton = document.getElementById('auth-button');
+      if (response.error) {
+        authButton.hidden = false;
+      }
+      else {
+        authButton.hidden = true;   
         queryAccounts();
-    //     var authButton = document.getElementById('auth-button');
-    //   if (response.error) {
-    //     authButton.hidden = false;
-    //   }
-    //   else {
-    //     authButton.hidden = true;   
-    //     queryAccounts();
-    //   }
+      }
     });
   }
 
@@ -56,24 +56,23 @@ function queryAccounts() {
 }
 
 
-function handleAccounts() {
+function handleAccounts(response) {
  
   // Handles the response from the accounts list method.
-//   if (response.result.items && response.result.items.length) {
-    // Get the first Google Analytics account.response.result.items[0].id
-    var firstAccountId = '111398624';
+  if (response.result.items && response.result.items.length) {
+    // Get the first Google Analytics account.
+    var firstAccountId = response.result.items[0].id;
   
     // Query for properties.
     queryProperties(firstAccountId);
-    console.log(queryProperties(firstAccountId));
-//   } else {
-//     console.log('No accounts found for this user.');
-//   }
+  } else {
+    console.log('No accounts found for this user.');
+  }
 }
 
 
 function queryProperties(accountId) {
-
+ 
   // Get a list of all the properties for the account.
   gapi.client.analytics.management.webproperties.list(
       {'accountId': accountId})
