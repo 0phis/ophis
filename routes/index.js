@@ -1,4 +1,6 @@
 var express = require('express');
+var google = require('googleapis');
+var fs = require('fs');
 var router = express.Router();
 
 /* GET home page. */
@@ -12,6 +14,27 @@ router.get('/about', function(req, res, next) {
   res.render('about', { title: 'about' });
 });
 router.get('/google-apis', function(req, res, next) {
-  res.render('anaapis', { title: 'apis' });
+  // res.render('anaapis', { title: 'apis' });
+  fs.readFile('./myappapis-9299a542bcef.json', 'utf8', function (err,data) {
+    if (err) {
+      return console.log('err',err);
+    }
+    var key = JSON.parse(data);
+    var jwtClient = new google.auth.JWT(
+      key.client_email,
+      null,
+      key.private_key,
+      ['https://www.googleapis.com/auth/analytics'], // an array of auth scopes
+      null
+    );
+    
+   jwtClient.authorize(function (err, tokens) {
+        console.log(err,tokens);
+      if (err) {
+        console.log(err);
+        return;
+      }
+    });
+  });
 });
 module.exports = router;
