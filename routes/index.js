@@ -20,6 +20,7 @@ router.get('/google-apis', function(req, res, next) {
       return console.log('err',err);
     }
     var key = JSON.parse(data);
+    console.log('>>>>>>>>>>>>>>>>>>',data);
     var jwtClient = new google.auth.JWT(
       key.client_email,
       null,
@@ -29,6 +30,7 @@ router.get('/google-apis', function(req, res, next) {
     );
     
    jwtClient.authorize(function (err, tokens) {
+    console.log('??????????????????',tokens);
         console.log(err,tokens);
       if (err) {
         console.log(err);
