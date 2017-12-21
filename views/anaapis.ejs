@@ -6,7 +6,7 @@
 </head>
 <body>
 
-<button id="auth-button">Authorize</button>
+<button id="auth-button" onclick="authorize()">Authorize</button>
 
 <h1>Hello Analytics</h1>
 
@@ -21,10 +21,10 @@
   var SCOPES = ['https://www.googleapis.com/auth/analytics.readonly'];
 
 
-  function authorize(event) {
+  function authorize() {
     // Handles the authorization flow.
     // `immediate` should be false when invoked from the button click.
- 
+    console.log("****************");
     var authData = {
       client_id: CLIENT_ID,
       scope: SCOPES,
@@ -154,7 +154,7 @@ function queryCoreReportingApi(profileId) {
 }
 
   // Add an event listener to the 'auth-button'.
-  document.getElementById('auth-button').addEventListener('click', authorize);
+  // document.getElementById('auth-button').addEventListener('click', authorize);
 </script>
 
 <!-- <script src="https://apis.google.com/js/client.js?onload=authorize"></script> -->
