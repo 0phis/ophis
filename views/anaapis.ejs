@@ -49,9 +49,10 @@ function queryAccounts() {
    
   // Load the Google Analytics client library.
   gapi.client.load('analytics', 'v3').then(function() {
-    console.log('????????????',response);
+   
     // Get a list of all Google Analytics accounts for this user
     gapi.client.analytics.management.accounts.list().then(handleAccounts);
+    console.log('????????????',gapi.client.analytics.management.accounts.list());
   });
 }
 
