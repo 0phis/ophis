@@ -20,18 +20,21 @@ router.get('/google-apis', function(req, res, next) {
  var VIEW_ID = 'ga:166533939';
     let jwtClient = new google.auth.JWT(
       key.client_email, null, key.private_key,
-      ['https://www.googleapis.com/auth/analytics.readonly'], null);
+      ['https://www.googleapis.com/auth/analytics.readonly',
+      'https://www.googleapis.com/auth/drive',
+      'https://www.googleapis.com/auth/spreadsheets'], null);
     jwtClient.authorize(function (err, tokens) {
       if (err) {
         console.log(err);
         return;
       }
       let analytics = google.analytics('v3');
+      console.log(analytics.management.accounts.list());
       queryData(analytics);
     });
     function queryData(analytics) {
       analytics.data.ga.get({
-        'auth': jwtClient,
+        auth: jwtClient,
         'ids': VIEW_ID,
         'metrics': 'ga:uniquePageviews',
         'dimensions': 'ga:pagePath',
