@@ -6,7 +6,7 @@
 </head>
 <body>
 
-<button id="auth-button" hidden>Authorize</button>
+<button id="auth-button">Authorize</button>
 
 <h1>Hello Analytics</h1>
 
@@ -24,23 +24,20 @@
   function authorize(event) {
     // Handles the authorization flow.
     // `immediate` should be false when invoked from the button click.
-    var useImmdiate = event ? false : true;
+ 
     var authData = {
       client_id: CLIENT_ID,
       scope: SCOPES,
-      immediate: useImmdiate // true
     };
 
     gapi.auth.authorize(authData, function(response) {
         console.log('>>>>>>>',response);
-        var authButton = document.getElementById('auth-button');
+
       if (response.error) {
         console.log("------------");
-        authButton.hidden = false;
       }
       else {
         console.log("+++++++++++++");
-        authButton.hidden = true;   
         queryAccounts();
       }
     });
@@ -160,7 +157,7 @@ function queryCoreReportingApi(profileId) {
   document.getElementById('auth-button').addEventListener('click', authorize);
 </script>
 
-<script src="https://apis.google.com/js/client.js?onload=authorize"></script>
+<!-- <script src="https://apis.google.com/js/client.js?onload=authorize"></script> -->
 
 </body>
 </html>
