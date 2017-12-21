@@ -15,7 +15,7 @@
 <script>
 
   // Replace with your client ID from the developer console.
-  var CLIENT_ID = '358569257582-8s3ev0umpdh5ivuel0a5qt1bltjq1r0n.apps.googleusercontent.com';
+  var CLIENT_ID = '358569257582-g5b8vtdvqgdjmrh87fmlppergda0hn0s.apps.googleusercontent.com';
 
   // Set authorized scope.
   var SCOPES = ['https://www.googleapis.com/auth/analytics.readonly'];
@@ -28,17 +28,16 @@
     var authData = {
       client_id: CLIENT_ID,
       scope: SCOPES,
-      immediate: useImmdiate // true
+      immediate: useImmdiate
     };
 
     gapi.auth.authorize(authData, function(response) {
-        console.log('>>>>>>>',response);
-        var authButton = document.getElementById('auth-button');
+      var authButton = document.getElementById('auth-button');
       if (response.error) {
         authButton.hidden = false;
       }
       else {
-        authButton.hidden = true;   
+        authButton.hidden = true;
         queryAccounts();
       }
     });
@@ -46,7 +45,6 @@
 
 
 function queryAccounts() {
-   
   // Load the Google Analytics client library.
   gapi.client.load('analytics', 'v3').then(function() {
 
@@ -57,12 +55,11 @@ function queryAccounts() {
 
 
 function handleAccounts(response) {
-    console.log('!!!!!!!!!!!!!',response);
   // Handles the response from the accounts list method.
   if (response.result.items && response.result.items.length) {
     // Get the first Google Analytics account.
     var firstAccountId = response.result.items[0].id;
-  
+
     // Query for properties.
     queryProperties(firstAccountId);
   } else {
@@ -72,7 +69,6 @@ function handleAccounts(response) {
 
 
 function queryProperties(accountId) {
- 
   // Get a list of all the properties for the account.
   gapi.client.analytics.management.webproperties.list(
       {'accountId': accountId})
@@ -85,16 +81,15 @@ function queryProperties(accountId) {
 
 
 function handleProperties(response) {
-   
   // Handles the response from the webproperties list method.
   if (response.result.items && response.result.items.length) {
 
     // Get the first Google Analytics account
     var firstAccountId = response.result.items[0].accountId;
-    
+
     // Get the first property ID
     var firstPropertyId = response.result.items[0].id;
-    
+
     // Query for Views (Profiles).
     queryProfiles(firstAccountId, firstPropertyId);
   } else {
@@ -104,7 +99,6 @@ function handleProperties(response) {
 
 
 function queryProfiles(accountId, propertyId) {
-    
   // Get a list of all Views (Profiles) for the first property
   // of the first Account.
   gapi.client.analytics.management.profiles.list({
@@ -120,12 +114,11 @@ function queryProfiles(accountId, propertyId) {
 
 
 function handleProfiles(response) {
- 
   // Handles the response from the profiles list method.
   if (response.result.items && response.result.items.length) {
     // Get the first View (Profile) ID.
     var firstProfileId = response.result.items[0].id;
-   
+
     // Query the Core Reporting API.
     queryCoreReportingApi(firstProfileId);
   } else {
@@ -135,7 +128,6 @@ function handleProfiles(response) {
 
 
 function queryCoreReportingApi(profileId) {
-   
   // Query the Core Reporting API for the number sessions for
   // the past seven days.
   gapi.client.analytics.data.ga.get({
