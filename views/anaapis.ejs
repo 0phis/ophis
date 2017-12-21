@@ -35,9 +35,11 @@
         console.log('>>>>>>>',response);
         var authButton = document.getElementById('auth-button');
       if (response.error) {
+        console.log("------------");
         authButton.hidden = false;
       }
       else {
+        console.log("+++++++++++++");
         authButton.hidden = true;   
         queryAccounts();
       }
@@ -49,10 +51,9 @@ function queryAccounts() {
    
   // Load the Google Analytics client library.
   gapi.client.load('analytics', 'v3').then(function() {
-   
+
     // Get a list of all Google Analytics accounts for this user
     gapi.client.analytics.management.accounts.list().then(handleAccounts);
-    console.log('????????????',response);
   });
 }
 
