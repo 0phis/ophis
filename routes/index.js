@@ -16,7 +16,7 @@ router.get('/about', function(req, res, next) {
   res.render('about', { title: 'about' });
 });
 router.get('/google-apis', function(req, res, next) {
-  var key =JSON.parse( fs.readFileSync('myappapis-9299a542bcef.json'));
+  var key =JSON.parse( fs.readFileSync('My_Project.json'));
  var VIEW_ID = 'ga:166533939';
     let jwtClient = new google.auth.JWT(
       key.client_email, null, key.private_key,
@@ -28,14 +28,19 @@ router.get('/google-apis', function(req, res, next) {
         console.log(err);
         return;
       }
-      console.log('******************',tokens);
+      
       let analytics = google.analytics('v3');
-      console.log('???????????????????????????',analytics.management.accounts.list());
       queryData(analytics);
     });
     function queryData(analytics) {
+      console.log('////////////////////////',jwtClient);
+
+      gapi.auth.authorize(jwtClient, function(response) {
+        console.log('>>>>>>>>>>>>>>>>>>',response);
+       
+      });
       analytics.data.ga.get({
-        auth: jwtClient,
+        'auth':jwtClient,
         'ids': VIEW_ID,
         'metrics': 'ga:uniquePageviews',
         'dimensions': 'ga:pagePath',
@@ -49,7 +54,8 @@ router.get('/google-apis', function(req, res, next) {
           console.log(err);
           return;
         }
-        console.log(JSON.stringify(response, null, 4));
+        console.log('...................',response);
+       //console.log(JSON.stringify(response, null, 4));
       });  
     }
 // res.render('anaapis', { title: 'apis' }); 
