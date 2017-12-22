@@ -28,36 +28,21 @@ router.get('/google-apis', function(req, res, next) {
         console.log(err);
         return;
       }
-      
-      let analytics = google.analytics('v3');
-      queryData(analytics);
     });
-    function queryData(analytics) {
-      console.log('////////////////////////',jwtClient);
-
-      gapi.auth.authorize(jwtClient, function(response) {
-        console.log('>>>>>>>>>>>>>>>>>>',response);
-       
-      });
       analytics.data.ga.get({
-        'auth':jwtClient,
+        auth:jwtClient,
         'ids': VIEW_ID,
-        'metrics': 'ga:uniquePageviews',
-        'dimensions': 'ga:pagePath',
         'start-date': '30daysAgo',
         'end-date': 'yesterday',
-        'sort': '-ga:uniquePageviews',
-        'max-results': 10,
-        'filters': 'ga:pagePath=~/ch_[-a-z0-9]+[.]html$',
+        'metrics': 'ga:uniquePageviews'
       }, function (err, response) {
         if (err) {
           console.log(err);
           return;
         }
-        console.log('...................',response);
-       //console.log(JSON.stringify(response, null, 4));
+       console.log(JSON.stringify(response, null, 4));
       });  
-    }
+    
 // res.render('anaapis', { title: 'apis' }); 
 });
 router.get('/google', function(req, res, next) {
