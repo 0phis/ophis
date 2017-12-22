@@ -28,21 +28,28 @@ router.get('/google-apis', function(req, res, next) {
         console.log(err);
         return;
       }
+      queryData(analytics);
     });
+    function queryData(analytics) {
       analytics.data.ga.get({
-        auth:jwtClient,
+        'auth':jwtClient,
         'ids': VIEW_ID,
+        'metrics': 'ga:uniquePageviews',
+        'dimensions': 'ga:pagePath',
         'start-date': '30daysAgo',
         'end-date': 'yesterday',
-        'metrics': 'ga:uniquePageviews'
+        'sort': '-ga:uniquePageviews',
+        'max-results': 10,
+        'filters': 'ga:pagePath=~/ch_[-a-z0-9]+[.]html$'
       }, function (err, response) {
         if (err) {
           console.log(err);
           return;
         }
+        // console.log('...................');
        console.log(JSON.stringify(response, null, 4));
       });  
-    
+    }
 // res.render('anaapis', { title: 'apis' }); 
 });
 router.get('/google', function(req, res, next) {
