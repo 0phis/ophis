@@ -28,8 +28,9 @@ router.get('/google-apis', function(req, res, next) {
         console.log(err);
         return;
       }
+      console.log('******************',tokens);
       let analytics = google.analytics('v3');
-      console.log(analytics.management.accounts.list());
+      console.log('???????????????????????????',analytics.management.accounts.list());
       queryData(analytics);
     });
     function queryData(analytics) {

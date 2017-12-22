@@ -32,6 +32,7 @@
     };
 
     gapi.auth.authorize(authData, function(response) {
+      console.log('>>>>>>>>>>>>>>>>>>',response);
       var authButton = document.getElementById('auth-button');
       if (response.error) {
         authButton.hidden = false;
@@ -50,6 +51,7 @@ function queryAccounts() {
 
     // Get a list of all Google Analytics accounts for this user
     gapi.client.analytics.management.accounts.list().then(handleAccounts);
+    console.log('!!!!!!!!!!!!!!!!!!!',gapi.client.analytics.management.accounts.list());
   });
 }
 
