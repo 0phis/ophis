@@ -9,14 +9,16 @@ var analytics = google.analytics('v3');</br>
 var fs = require('fs');
 
 *Create My_Project.json:</br>
-//Click Create Credentials and select OAuth client ID.</br>
+//Click Create Credentials and select OAuth (client ID).</br>
 //Select Web application for APPLICATION TYPE.</br>
 //Name the credential.</br>
 //Set the AUTHORIZED JAVASCRIPT ORIGINS to http://localhost:8080</br>
 //Set the AUTHORIZED REDIRECT URIS to http://localhost:8080/oauth2callback</br>
 //Click Create.</br>
+
 *Click Create Credentials and select  'Service account key'</br>
 *client_email : decentralization analytics</br>
+
 B1: Analytics Accounts, Properties & Apps, Views  ???</br>
 B2:Click Admin</br>
 B3: Click User Management</br>
@@ -58,3 +60,4 @@ var key =JSON.parse( fs.readFileSync('My_Project.json'));</br>
 https://developers.google.com/analytics/devguides/reporting/core/dimsmets#cats=session,event_tracking</br>
 https://developers.google.com/analytics/devguides/reporting/core/v3/reference#q_details</br>
 https://developers.google.com/apis-explorer/#p/analytics/v3/</br>
+https://console.developers.google.com/projectselector/apis/credentials</br>
