@@ -1,6 +1,5 @@
 var express = require('express');
 var google = require('googleapis');
-var request = require('request');
 var analytics = google.analytics('v3');
 var fs = require('fs');
 var router = express.Router();
