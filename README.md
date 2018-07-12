@@ -1,8 +1,8 @@
 # ophis
 *cài đặt:</br>
-$ npm install -g express-generator
-$ express
-$ npm i
+$ npm install -g express-generator</br>
+$ express</br>
+$ npm i</br>
 $ npm install googleapis --save</br>
 $ npm install google-auth-library --save
 
